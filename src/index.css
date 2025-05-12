@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@import 'typeface-poppins';
+body,html {
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
