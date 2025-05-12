@@ -36,6 +36,18 @@ const BackgroundRemover: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      handleFileChange({ target: { files: [file] } } as any);
+    }
+  };
+
   const resetAll = (): void => {
     setImage(null);
     setPreviewUrl(null);
@@ -206,6 +218,10 @@ const BackgroundRemover: React.FC = () => {
             <div
               className="border-2 border-dashed border-gray-600 rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer hover:border-purple-500 transition-colors"
               onClick={() => fileInputRef.current?.click()}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onDragEnter={(e) => e.preventDefault()} // Prevent browser's default handling
+              onDragLeave={(e) => e.preventDefault()} // Prevent browser's default handling
             >
               <Upload className="w-16 h-16 text-purple-500 mb-4" />
               <p className="text-xl font-medium text-gray-300 mb-2">
@@ -220,7 +236,7 @@ const BackgroundRemover: React.FC = () => {
                 onChange={handleFileChange}
               />
             </div>
-          ) : (
+          )  : (
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="w-full md:w-1/2">
